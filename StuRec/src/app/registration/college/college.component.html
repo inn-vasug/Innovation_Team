@@ -1,1 +1,81 @@
-<p>college works!</p>
+<div class="container text-center mt-5">
+    <h1 class="display-6">Institute Registration</h1>
+    <form [formGroup]="regDetails" (ngSubmit)="onRegister()">
+        <div class="row gap-2 text-start">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="mb3">
+                    <label for="instituteName" class="form-label">Institute Name</label>
+                    <input type="text" formControlName="instituteName" class="form-control" id="instituteName" >
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="mb-3">
+                    <label for="userEmail" class="form-label">User Email</label>
+                    <input type="email"  formControlName="userEmail" class="form-control" id="userEmail" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+            </div>
+        </div>
+        <div class="row gap-2 text-start">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" formControlName="password" class="form-control" id="password">
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm Password</label>
+                    <input type="password" formControlName="confirmPassword" class="form-control" id="confirmPassword">
+                </div>
+            </div>
+        </div>
+        <div class="row gap-2 text-start">
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input type="text" formControlName="address" class="form-control" id="address">
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" formControlName="city" class="form-control" id="city">
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="mb-3">
+                    <label for="state" class="form-label">State</label>
+                    <input type="text" formControlName="state" class="form-control" id="state">
+                </div>  
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3">
+                <div class="mb-3">
+                    <label for="zip" class="form-label">Zip / Pin code</label>
+                    <input type="text" formControlName="zip" class="form-control" id="zip">
+                </div>
+            </div>
+        </div>
+        <div class="row gap-2 text-start">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" formControlName="phone" class="form-control" id="phone">
+                </div>  
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="mb-3">
+                    <label for="instituteURL" class="form-label">Institute URL</label>
+                    <input type="text" formControlName="instituteURL" class="form-control" id="instituteURL">
+                </div>
+            </div>
+        </div>
+        <div class="row gap-2">
+            <div class="col-8 text-end">
+                <div class="mb-3">
+                    <button type="submit" [disabled]="!regDetails.valid" class="btn btn-success mb-3">Submit</button>
+                </div>  
+            </div>
+        </div>
+    </form>
+</div>
