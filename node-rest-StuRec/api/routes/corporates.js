@@ -15,7 +15,25 @@ router.get('/:corporateId', (req,res,next) => {
     });
 });
 
+router.put('/', (req,res,next) => {
+    const inputJsonData = {
+        orgName: req.body.orgName,
+        firstName: req.body.orgFirstName,
+        lastName: req.body.orgLastName
+    };
+    res.status(200).json({
+        message: 'Handel PUT request for corporates',
+        data: inputJsonData
+    });
+});
+
 router.post('/', (req,res,next) => {
+    const inputJsonData = {
+        corporateId: req.body.corporateId,
+        orgName: req.body.orgName,
+        firstName: req.body.orgFirstName,
+        lastName: req.body.orgLastName
+    };
     res.status(201).json({
         message: 'Handel POST request for corporates'
     });
