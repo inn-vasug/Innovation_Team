@@ -7,9 +7,19 @@ const corporatesRoutes = require('./api/routes/corporates');
 const instituteRoutes = require('./api/routes/institute');
 
 app.use(morgan('dev'));
-const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+app.use((req,res,next) => {
+    res.header("Access-Control-Allow-Origin","*");
+    res.header("Access-Control-Allow-Headers", 
+    "Origin, X-Request-With, Content-Type, Accept, Authorization");
+    if(req.method === 'OPTIONS') {
+        res.header("Access-Control-Allow-Methods","GET, PUT, POST, DELETE");
+        return res.status(200).json({});
+    }
+    next();
+});
 
 app.use('/corporates', corporatesRoutes);
 app.use('/institute', instituteRoutes);
