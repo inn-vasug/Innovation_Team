@@ -1,10 +1,33 @@
 const express = require('express');
 const router = express.Router();
+const { MongoClient, ServerApiVersion, ConnectionCheckOutFailedEvent } = require('mongodb');
+const uri = "mongodb+srv://somdevm:MyPassword123@cluster0.8fhxo8x.mongodb.net/?retryWrites=true&w=majority";
+const database = 'RecMgt';
+
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+
+
+async function getCorporateList() {
+    await client.connect();
+    const db = client.db(database);
+    const collection = db.collection('corporate');
+    return collection.find({}).toArray();
+}
 
 router.get('/', (req,res,next) => {
-    res.status(200).json({
-        message: 'Handel GET request for corporates'
-    });
+    getCorporateList().then(dt => {
+            res.status(200).json({
+            message: 'Handel GET request for corporates',
+            data: dt
+        });
+    }).catch( err => {
+        res.status(200).json({
+            message: 'Handel GET request for corporates. Has error',
+            data: err
+        });
+    }).finally(() => {
+        client.close();
+    }); 
 });
 
 router.get('/:corporateId', (req,res,next) => {
