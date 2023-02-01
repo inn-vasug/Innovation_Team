@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { MongoClient, ServerApiVersion, ConnectionCheckOutFailedEvent } = require('mongodb');
+const { MongoClient, ServerApiVersion, ConnectionCheckOutFailedEvent, ObjectId } = require('mongodb');
 const uri = "mongodb+srv://somdevm:MyPassword123@cluster0.8fhxo8x.mongodb.net/?retryWrites=true&w=majority";
 const database = 'RecMgt';
 
@@ -8,20 +8,24 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 
 
 async function getCorporateList() {
-    await client.connect();
-    const db = client.db(database);
-    const collection = db.collection('corporate');
-    return collection.find({}).toArray();
+    try {
+        await client.connect();
+        const db = client.db(database);
+        const collection = db.collection('corporate');
+        return collection.find({}).toArray();
+    } catch (error) {
+        throw error;
+    }
 }
 
 router.get('/', (req,res,next) => {
     getCorporateList().then(dt => {
-            res.status(200).json({
+        res.status(200).json({
             message: 'Handel GET request for corporates',
             data: dt
         });
     }).catch( err => {
-        res.status(200).json({
+        res.status(500).json({
             message: 'Handel GET request for corporates. Has error',
             data: err
         });
@@ -30,11 +34,31 @@ router.get('/', (req,res,next) => {
     }); 
 });
 
+async function getCorporate(id) {
+    try {
+        await client.connect();
+        const db = client.db(database);
+        const collection = db.collection('corporate');
+        return collection.findOne({_id: new ObjectId(id)});
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 router.get('/:corporateId', (req,res,next) => {
     const id = req.params.corporateId;
-    res.status(200).json({
-        message: 'Handel GET request for specific corporates',
-        id: id
+    getCorporate(id).then(dt => {
+        res.status(200).json({
+            message: 'Handel GET request for corporate',
+            data: dt
+        });
+    }).catch( err => {
+        res.status(500).json({
+            message: 'Handel GET request for corporates. Has error',
+            data: err
+        });
+    }).finally(() => {
+        client.close();
     });
 });
 
